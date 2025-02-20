@@ -1,10 +1,12 @@
-export const getTextSizeClass = (baseSize: string, textSize: string) => {
+export function getTextSizeClass(baseClass: string, textSize: string) {
   switch (textSize) {
+    case "standard":
+      return "text-base";
     case "large":
-      return baseSize === "text-sm" ? "text-lg" : "text-xl";
+      return "text-lg";
     case "extra-large":
-      return baseSize === "text-sm" ? "text-xl" : "text-2xl";
+      return "text-xl";
     default:
-      return baseSize;
+      return "text-base";
   }
-};
+}
