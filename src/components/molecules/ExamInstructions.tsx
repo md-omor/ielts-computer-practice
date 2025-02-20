@@ -1,4 +1,5 @@
-import { ExamType, startTest } from "@/store/slices/timerSlice";
+import type { ExamType } from "@/store/slices/timerSlice";
+import { startTest } from "@/store/slices/timerSlice";
 import type { RootState } from "@/store/store";
 import { getTextSizeClass } from "@/utils/textSizeUtils";
 import { Info } from "lucide-react";
