@@ -1,7 +1,11 @@
 import DialogWrapper from "@/components/molecules/dialog-wrapper";
 import { Button } from "@/components/ui/button";
+import { setScreenResolution, setTextSize } from "@/store/slices/settingsSlice";
+import type { RootState } from "@/store/store";
 import { Label } from "@radix-ui/react-label";
 import { RadioGroup } from "@radix-ui/react-radio-group";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 interface SettingsDialogProps {
   isOpen: boolean;
@@ -9,6 +13,55 @@ interface SettingsDialogProps {
 }
 
 const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
+  const dispatch = useDispatch();
+  const { textSize, screenResolution } = useSelector(
+    (state: RootState) => state.settings
+  );
+
+  // Local state for both settings
+  const [tempTextSize, setTempTextSize] = useState(textSize);
+  const [tempResolution, setTempResolution] = useState(screenResolution);
+
+  const handleTextSizeChange = (value: string) => {
+    setTempTextSize(value as "standard" | "large" | "extra-large");
+  };
+
+  const handleResolutionChange = (value: string) => {
+    setTempResolution(value as "800" | "1024" | "1280");
+  };
+
+  const handleClose = () => {
+    // Apply both changes when OK is clicked
+    dispatch(setTextSize(tempTextSize));
+    dispatch(setScreenResolution(tempResolution));
+    onClose();
+  };
+
+  // Reset temp states when dialog opens
+  useEffect(() => {
+    if (isOpen) {
+      setTempTextSize(textSize);
+      setTempResolution(screenResolution);
+    }
+  }, [isOpen, textSize, screenResolution]);
+
+  // Effect to apply resolution changes
+  useEffect(() => {
+    // Apply resolution changes to viewport
+    const setViewportSize = () => {
+      const width = parseInt(screenResolution);
+      const height = width === 800 ? 600 : width === 1024 ? 768 : 1024;
+
+      // You might want to adjust how you apply the resolution based on your needs
+      document.documentElement.style.width = `${width}px`;
+      document.documentElement.style.height = `${height}px`;
+      document.documentElement.style.margin = "0 auto";
+      document.documentElement.style.overflow = "auto";
+    };
+
+    setViewportSize();
+  }, [screenResolution]);
+
   return (
     <DialogWrapper isOpen={isOpen} onClose={onClose} title="Settings">
       <div className="space-y-6 w-full bg-gradient-to-b from-sky-50 to-sky-100 p-6 rounded-b-lg">
@@ -22,19 +75,21 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
             {/* Text Size */}
             <div className="space-y-3">
               <h3 className="font-bold">Text size</h3>
-              <RadioGroup defaultValue="standard" name="text-size">
+              <RadioGroup
+                value={tempTextSize}
+                onValueChange={handleTextSizeChange}
+                name="text-size"
+              >
                 <div className="space-y-2.5">
                   <div className="flex items-center space-x-2">
                     <input
                       type="radio"
                       value="standard"
                       id="standard"
-                      name="text-size"
+                      checked={tempTextSize === "standard"}
+                      onChange={(e) => handleTextSizeChange(e.target.value)}
                       className="w-4 h-4 accent-gray-500 border-gray-300 text-gray-600"
-                      style={{
-                        accentColor: "#64748b", // slate-500 color
-                      }}
-                      defaultChecked
+                      style={{ accentColor: "#64748b" }}
                     />
                     <Label htmlFor="standard" className="text-sm">
                       Standard
@@ -45,11 +100,10 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
                       type="radio"
                       value="large"
                       id="large"
-                      name="text-size"
+                      checked={tempTextSize === "large"}
+                      onChange={(e) => handleTextSizeChange(e.target.value)}
                       className="w-4 h-4 accent-gray-500 border-gray-300 text-gray-600"
-                      style={{
-                        accentColor: "#64748b", // slate-500 color
-                      }}
+                      style={{ accentColor: "#64748b" }}
                     />
                     <Label htmlFor="large" className="text-sm">
                       Large
@@ -60,11 +114,10 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
                       type="radio"
                       value="extra-large"
                       id="extra-large"
-                      name="text-size"
+                      checked={tempTextSize === "extra-large"}
+                      onChange={(e) => handleTextSizeChange(e.target.value)}
                       className="w-4 h-4 accent-gray-500 border-gray-300 text-gray-600"
-                      style={{
-                        accentColor: "#64748b", // slate-500 color
-                      }}
+                      style={{ accentColor: "#64748b" }}
                     />
                     <Label htmlFor="extra-large" className="text-sm">
                       Extra large
@@ -147,18 +200,21 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
             {/* Screen Resolution */}
             <div className="space-y-3">
               <h3 className="font-bold">Screen Resolution</h3>
-              <RadioGroup defaultValue="1280" name="resolution">
+              <RadioGroup
+                value={tempResolution}
+                onValueChange={handleResolutionChange}
+                name="resolution"
+              >
                 <div className="space-y-2.5">
                   <div className="flex items-center space-x-2">
                     <input
                       type="radio"
                       value="800"
                       id="800"
-                      name="resolution"
+                      checked={tempResolution === "800"}
+                      onChange={(e) => handleResolutionChange(e.target.value)}
                       className="w-4 h-4 accent-gray-500 border-gray-300 text-gray-600"
-                      style={{
-                        accentColor: "#64748b", // slate-500 color
-                      }}
+                      style={{ accentColor: "#64748b" }}
                     />
                     <Label htmlFor="800" className="text-sm">
                       800 x 600
@@ -169,11 +225,10 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
                       type="radio"
                       value="1024"
                       id="1024"
-                      name="resolution"
+                      checked={tempResolution === "1024"}
+                      onChange={(e) => handleResolutionChange(e.target.value)}
                       className="w-4 h-4 accent-gray-500 border-gray-300 text-gray-600"
-                      style={{
-                        accentColor: "#64748b", // slate-500 color
-                      }}
+                      style={{ accentColor: "#64748b" }}
                     />
                     <Label htmlFor="1024" className="text-sm">
                       1024 x 768
@@ -184,12 +239,10 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
                       type="radio"
                       value="1280"
                       id="1280"
-                      name="resolution"
+                      checked={tempResolution === "1280"}
+                      onChange={(e) => handleResolutionChange(e.target.value)}
                       className="w-4 h-4 accent-gray-500 border-gray-300 text-gray-600"
-                      style={{
-                        accentColor: "#64748b", // slate-500 color
-                      }}
-                      defaultChecked
+                      style={{ accentColor: "#64748b" }}
                     />
                     <Label htmlFor="1280" className="text-sm">
                       1280 x 1024
@@ -203,7 +256,7 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
 
         <div className="flex justify-center mt-6">
           <Button
-            onClick={onClose}
+            onClick={handleClose}
             className="px-8 py-1.5 h-8 !font-bold bg-gradient-to-b from-gray-200 to-gray-300 hover:bg-gray-300 text-gray-700 rounded shadow-sm"
           >
             OK
