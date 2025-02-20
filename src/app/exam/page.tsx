@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 const Exam = () => {
   const router = useRouter();
-  const examType = "Listening"; // This could be dynamic based on your needs
+  const examType = "LISTENING"; // This could be dynamic based on your needs
   const examData = examConfigurations[examType];
 
   const handleStartTest = () => {
