@@ -1,16 +1,17 @@
-import Topbar from "@/components/organisms/topbar";
+"use client";
 
-export default function Listening({
+import type { RootState } from "@/store/store";
+import { getTextSizeClass } from "@/utils/textSizeUtils";
+import { useSelector } from "react-redux";
+
+export default function ListeningLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { textSize } = useSelector((state: RootState) => state.settings);
+
   return (
-    <html lang="en">
-      <body className={`antialiased`}>
-        <Topbar />
-        {children}
-      </body>
-    </html>
+    <div className={`${getTextSizeClass("text-sm", textSize)}`}>{children}</div>
   );
 }
