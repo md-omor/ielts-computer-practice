@@ -4,9 +4,11 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import settingsReducer from "./slices/settingsSlice";
+import timerReducer from "./slices/timerSlice";
 
 const rootReducer = combineReducers({
   settings: settingsReducer,
+  timer: timerReducer,
 });
 
 const persistConfig = {
