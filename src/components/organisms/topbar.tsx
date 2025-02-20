@@ -1,6 +1,6 @@
 "use client";
 
-import Timer from "@/components/molecules/timer";
+import { Timer } from "@/components/molecules/timer";
 import UserNumber from "@/components/molecules/user-number";
 
 import HelpDialog from "@/features/topbar/help-dialog";
@@ -20,7 +20,7 @@ const Topbar = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center bg-gray-800 text-white py-2 px-10">
+      <div className="flex justify-between items-center bg-gray-800 text-white py-2 px-10 w-full">
         <UserNumber />
         <Timer />
         <div className="flex items-center gap-x-2">
