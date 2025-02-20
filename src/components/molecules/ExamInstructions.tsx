@@ -1,10 +1,9 @@
+import { ExamType, startTest } from "@/store/slices/timerSlice";
 import type { RootState } from "@/store/store";
 import { getTextSizeClass } from "@/utils/textSizeUtils";
 import { Info } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../ui/button";
-
-export type ExamType = "Listening" | "Reading" | "Writing" | "Speaking";
 
 export interface ExamInstructionsProps {
   examType: ExamType;
@@ -14,14 +13,20 @@ export interface ExamInstructionsProps {
   onStart: () => void;
 }
 
-const ExamInstructions = ({
+export const ExamInstructions = ({
   examType,
   duration,
   instructions,
   information,
   onStart,
 }: ExamInstructionsProps) => {
+  const dispatch = useDispatch();
   const { textSize } = useSelector((state: RootState) => state.settings);
+
+  const handleStart = () => {
+    dispatch(startTest(examType));
+    onStart();
+  };
 
   return (
     <div className="w-full bg-white p-3 pb-12 rounded-md shadow-xl">
@@ -93,7 +98,7 @@ const ExamInstructions = ({
           </p>
         </div>
         <Button
-          onClick={onStart}
+          onClick={handleStart}
           className={`${getTextSizeClass(
             "text-sm",
             textSize
