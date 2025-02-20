@@ -15,7 +15,7 @@ export default function ExamLayout({
   return (
     <>
       <Topbar />
-      <div className={`${getTextSizeClass("text-sm", textSize)}`}>
+      <div className={`${getTextSizeClass("text-base", textSize)}`}>
         {children}
       </div>
     </>
