@@ -27,7 +27,9 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
   };
 
   const handleResolutionChange = (value: string) => {
-    setTempResolution(value as "800" | "1024" | "1280");
+    const resolution =
+      value === "800" ? "800x600" : value === "1024" ? "1024x768" : "1280x1024";
+    setTempResolution(resolution);
   };
 
   const handleClose = () => {
@@ -44,23 +46,6 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
       setTempResolution(screenResolution);
     }
   }, [isOpen, textSize, screenResolution]);
-
-  // Effect to apply resolution changes
-  useEffect(() => {
-    // Apply resolution changes to viewport
-    const setViewportSize = () => {
-      const width = parseInt(screenResolution);
-      const height = width === 800 ? 600 : width === 1024 ? 768 : 1024;
-
-      // You might want to adjust how you apply the resolution based on your needs
-      document.documentElement.style.width = `${width}px`;
-      document.documentElement.style.height = `${height}px`;
-      document.documentElement.style.margin = "0 auto";
-      document.documentElement.style.overflow = "auto";
-    };
-
-    setViewportSize();
-  }, [screenResolution]);
 
   return (
     <DialogWrapper isOpen={isOpen} onClose={onClose} title="Settings">
@@ -201,7 +186,7 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
             <div className="space-y-3">
               <h3 className="font-bold">Screen Resolution</h3>
               <RadioGroup
-                value={tempResolution}
+                value={tempResolution.split("x")[0]}
                 onValueChange={handleResolutionChange}
                 name="resolution"
               >
@@ -211,7 +196,7 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
                       type="radio"
                       value="800"
                       id="800"
-                      checked={tempResolution === "800"}
+                      checked={tempResolution === "800x600"}
                       onChange={(e) => handleResolutionChange(e.target.value)}
                       className="w-4 h-4 accent-gray-500 border-gray-300 text-gray-600"
                       style={{ accentColor: "#64748b" }}
@@ -225,7 +210,7 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
                       type="radio"
                       value="1024"
                       id="1024"
-                      checked={tempResolution === "1024"}
+                      checked={tempResolution === "1024x768"}
                       onChange={(e) => handleResolutionChange(e.target.value)}
                       className="w-4 h-4 accent-gray-500 border-gray-300 text-gray-600"
                       style={{ accentColor: "#64748b" }}
@@ -239,7 +224,7 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
                       type="radio"
                       value="1280"
                       id="1280"
-                      checked={tempResolution === "1280"}
+                      checked={tempResolution === "1280x1024"}
                       onChange={(e) => handleResolutionChange(e.target.value)}
                       className="w-4 h-4 accent-gray-500 border-gray-300 text-gray-600"
                       style={{ accentColor: "#64748b" }}
