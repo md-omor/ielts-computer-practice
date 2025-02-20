@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type TextSize = "standard" | "large" | "extra-large";
 type ColorScheme = "standard" | "yellow-black" | "blue-white" | "blue-cream";
-type ScreenResolution = "800" | "1024" | "1280";
+type ScreenResolution = "800x600" | "1024x768" | "1280x1024";
 
 interface SettingsState {
   textSize: TextSize;
@@ -15,7 +15,7 @@ interface SettingsState {
 const initialState: SettingsState = {
   textSize: "standard",
   colorScheme: "standard",
-  screenResolution: "1280",
+  screenResolution: "1280x1024",
 };
 
 const settingsSlice = createSlice({
