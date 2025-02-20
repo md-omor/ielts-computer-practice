@@ -14,7 +14,7 @@ const Exam = () => {
   };
 
   return (
-    <div className="w-full px-5 py-6 bg-gradient-to-b from-sky-50 via-white to-sky-100 h-screen">
+    <div className="w-full px-5 py-6 bg-gradient-to-b from-sky-50 via-white to-sky-100 h-full">
       <ExamInstructions {...examData} onStart={handleStartTest} />
     </div>
   );
