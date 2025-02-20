@@ -1,8 +1,7 @@
+import type { ExamType } from "@/config/examData";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
-export type ExamType = "LISTENING" | "READING" | "WRITING" | "SPEAKING";
 
 interface TimerState {
   isTestStarted: boolean;
