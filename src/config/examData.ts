@@ -1,4 +1,4 @@
-import { ExamType } from "@/components/molecules/ExamInstructions";
+export type ExamType = "LISTENING" | "READING" | "WRITING" | "SPEAKING";
 
 interface ExamConfig {
   examType: ExamType;
@@ -9,8 +9,8 @@ interface ExamConfig {
 }
 
 export const examConfigurations: Record<ExamType, ExamConfig> = {
-  Listening: {
-    examType: "Listening",
+  LISTENING: {
+    examType: "LISTENING",
     duration: "Approximately 30 minutes",
     instructions: [
       "Answer all the questions.",
@@ -25,8 +25,8 @@ export const examConfigurations: Record<ExamType, ExamConfig> = {
     ],
     route: "/exam/listening",
   },
-  Reading: {
-    examType: "Reading",
+  READING: {
+    examType: "READING",
     duration: "60 minutes",
     instructions: [
       "Answer all the questions.",
@@ -40,8 +40,8 @@ export const examConfigurations: Record<ExamType, ExamConfig> = {
     ],
     route: "/exam/reading",
   },
-  Writing: {
-    examType: "Writing",
+  WRITING: {
+    examType: "WRITING",
     duration: "60 minutes",
     instructions: [
       "Answer both tasks.",
@@ -55,8 +55,8 @@ export const examConfigurations: Record<ExamType, ExamConfig> = {
     ],
     route: "/exam/writing",
   },
-  Speaking: {
-    examType: "Speaking",
+  SPEAKING: {
+    examType: "SPEAKING",
     duration: "11-14 minutes",
     instructions: [
       "Answer all questions.",
