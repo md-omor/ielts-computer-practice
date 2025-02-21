@@ -31,13 +31,13 @@ const Topbar = () => {
             Settings
           </Button>
           <Button
-            className="!py-0 !px-3 !h-8 !text-sm font-medium"
+            className="!py-0 !px-3 !h-8 !text-sm font-medium "
             onClick={() => setActiveDialog("help")}
           >
             Help <PiQuestionMarkFill className="text-slate-600" />{" "}
           </Button>
           <Button
-            className="!py-0 !px-3 !h-8 !text-sm font-medium"
+            className="!py-0 !px-3 !h-8 !text-sm font-medium "
             onClick={() => setActiveDialog("hide")}
           >
             Hide
