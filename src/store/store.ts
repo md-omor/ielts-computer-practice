@@ -3,18 +3,20 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import questionReducer from "./slices/questionSlice";
 import settingsReducer from "./slices/settingsSlice";
 import timerReducer from "./slices/timerSlice";
 
 const rootReducer = combineReducers({
   settings: settingsReducer,
   timer: timerReducer,
+  question: questionReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["settings"],
+  whitelist: ["settings", "question"],
   debug: true,
 };
 
