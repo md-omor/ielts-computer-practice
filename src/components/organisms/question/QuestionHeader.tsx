@@ -1,16 +1,15 @@
 "use client";
 
-import { mockQuestionData } from "@/config/mockQuestions";
-import { useAppSelector } from "@/hooks/reduxHooks";
+interface QuestionHeaderProps {
+  part: string;
+  questionRange: string;
+}
 
-const QuestionHeader = () => {
-  const currentPart = useAppSelector((state) => state.question.currentPart);
-  const currentQuestion = mockQuestionData[currentPart - 1];
-
+const QuestionHeader = ({ part, questionRange }: QuestionHeaderProps) => {
   return (
     <div className="bg-white rounded-lg p-4 shadow-sm">
-      <h2 className="font-semibold text-lg">{currentQuestion.title}</h2>
-      <p className="text-gray-600">{currentQuestion.description}</p>
+      <h2 className="font-semibold text-lg">Part {part}</h2>
+      <p className="text-gray-600">Questions {questionRange}</p>
     </div>
   );
 };
